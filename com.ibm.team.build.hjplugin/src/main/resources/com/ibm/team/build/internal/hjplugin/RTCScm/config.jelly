@@ -115,20 +115,6 @@
 	    		Both (config.xml and java class) expect <value> and <buildTypeStr>.
 	    		If config.xml structure is changed, users might find it difficult to move back to older version if needed.
 	    		-->
-	    		<!-- Build Definition -->
-				<f:dropdownListBlock selected="${instance == null || instance.buildTypeStr == 'buildDefinition'}" title="${%buildDefinition.title}" help="buildDefinitionType">
-					<!-- currentBuildTypeStr is used in config-loadoptions.jelly -->
-					<j:set var="currentBuildTypeStr" value="buildDefinition"/>
-					<f:invisibleEntry field="value" >
-						<input type="hidden" name="value" value="buildDefinition"/>
-					</f:invisibleEntry>
-				    <f:entry title="${%buildDefinition.title}"  field="buildDefinition" >
-				        <f:textbox name="buildDefinition" clazz="required" checkMessage="${%buildDefinition.checkMessage}" value="${instance.buildDefinition}" />
-				    </f:entry>
-				    
-				    <f:validateButton title="${%validateBuildDefinition.title}" progress="${%validateBuildDefinition.progress}" 
-				        method="validateBuildDefinition" with="overrideGlobal,buildTool,serverURI,userId,password,passwordFile,timeout,credentialsId,avoidUsingToolkit,buildDefinition" />
-				</f:dropdownListBlock>
 
 	    		<!-- Build Workspace -->
 				<f:dropdownListBlock selected="${instance != null &amp;&amp; instance.buildTypeStr == 'buildWorkspace'}" title="${%buildWorkspace.title}" help="buildWorkspaceType">
@@ -137,14 +123,12 @@
 					<f:invisibleEntry field="value" >
 						<input type="hidden" name="value" value="buildWorkspace"/>
 					</f:invisibleEntry>
-				    <f:entry title="${%buildWorkspace.title}"  field="buildWorkspace" >
+				    <f:entry title="${%Workspace name or UUID}"  field="buildWorkspace" >
 				        <f:textbox name="buildWorkspace" clazz="required" checkMessage="${%buildWorkspace.checkMessage}" value="${instance.buildWorkspace}" />
 				    </f:entry>
 	
 				    <f:validateButton title="${%validateBuildWorkspace.title}" progress="${%validateBuildWorkspace.progress}" 
 				        method="validateBuildWorkspace" with="overrideGlobal,buildTool,serverURI,userId,password,passwordFile,timeout,credentialsId,avoidUsingToolkit,buildWorkspace" />
-
-                    <st:include page="config-loadoptions.jelly" class="com.ibm.team.build.internal.hjplugin.RTCScm"/>
 
 					<!-- Accept changes before load -->
                     <f:section name="AcceptOptions" title="${%acceptOptions.title}"/>
@@ -160,12 +144,10 @@
 						<input type="hidden" name="value" value="buildSnapshot"/>
 					</f:invisibleEntry>
 					
-					<f:entry title="${%buildSnapshot.title}"  field="buildSnapshot" >
+					<f:entry title="${%Snapshot name or UUID}"  field="buildSnapshot" >
 				        <f:textbox name="buildSnapshot" value="${instance.buildSnapshot}" />
 				    </f:entry>
 
-				    <st:include page="config-loadoptions.jelly" class="com.ibm.team.build.internal.hjplugin.RTCScm"/>
-				                        
 				</f:dropdownListBlock>
 
 				<f:dropdownListBlock selected="${instance != null &amp;&amp; instance.buildTypeStr == 'buildStream'}" title="${%buildStream.title}" help="buildStreamType">
@@ -174,21 +156,42 @@
 					<f:invisibleEntry field="value" >
 						<input type="hidden" name="value" value="buildStream"/>
 					</f:invisibleEntry>
-                    <f:entry title="${%buildStream.title}"  field="buildStream" >
+                    <f:entry title="${%Stream name or UUID}"  field="buildStream" >
                         <f:textbox name="buildStream" clazz="required" checkMessage="${%buildStream.checkMessage}" value="${instance.buildStream}" />
                     </f:entry>
                     
                     <f:validateButton title="${%validateBuildStream.title}" progress="${%validateBuildStream.progress}" 
                         method="validateBuildStream" with="overrideGlobal,buildTool,serverURI,userId,password,passwordFile,timeout,credentialsId,avoidUsingToolkit,buildStream" />
                         
-					<st:include page="config-loadoptions.jelly" class="com.ibm.team.build.internal.hjplugin.RTCScm"/>
-					
 				    <f:section name="changelogOptions" title="${%changelogOptions.title}"/>
 					<f:optionalBlock name="generateChangelogWithGoodBuild" title="${%changelog.compareWithGoodBuild}" field="generateChangelogWithGoodBuild" checked="${instance.generateChangelogWithGoodBuild}" inline="true" />
 
 				</f:dropdownListBlock>
 			</f:dropdownList>
+			
 	    </table>
 	    </f:block>
+	    
+	    <f:block>
+    	<table width="100%">
+	        <!-- Load Directory -->
+	        <f:entry title="${%Load directory}" >
+	            <f:textbox />
+	        </f:entry>
+		</table>
+	    </f:block>
+        
+        
+        <f:block>
+    	<table width="100%">
+        	<f:entry title="${%Additional Behaviours}">
+		        <!-- TODO: switch to <f:repeatableHeteroList field="extensions"> -->
+		        <f:hetero-list name="extensions" items="${instance.extensions}" descriptors="${descriptor.getExtensionDescriptors()}"
+		                       hasHeader="true" />
+	    	</f:entry>
+	    	
+		</table>
+	    </f:block>
+        
             
 </j:jelly>

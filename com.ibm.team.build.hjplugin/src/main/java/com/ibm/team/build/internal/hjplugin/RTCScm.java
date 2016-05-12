@@ -35,6 +35,7 @@ import hudson.scm.SCMDescriptor;
 import hudson.scm.SCMRevisionState;
 import hudson.scm.SCM;
 import hudson.security.ACL;
+import hudson.util.DescribableList;
 import hudson.util.FormValidation;
 import hudson.util.Secret;
 import hudson.util.ListBoxModel;
@@ -57,6 +58,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import jenkins.model.Jenkins;
+import jenkins.plugins.experimental.behaviour.RTCExtension;
+import jenkins.plugins.experimental.behaviour.RTCExtensionDescriptor;
 import net.sf.json.JSONObject;
 
 import org.jvnet.localizer.LocaleProvider;
@@ -158,6 +161,11 @@ public class RTCScm extends SCM {
 		private String acceptBeforeLoad = "true";
 		private boolean generateChangelogWithGoodBuild;
 		
+		/**
+	     * All the configured extensions attached to this.
+	     */
+	    private DescribableList<RTCExtension,RTCExtensionDescriptor> extensions;
+		
 		@DataBoundConstructor
 		public BuildType(String value, String buildDefinition, String buildWorkspace, String buildSnapshot, String buildStream) {
 			this.value = value;
@@ -189,6 +197,10 @@ public class RTCScm extends SCM {
 		public void setCreateFoldersForComponents(boolean createFoldersForComponents) {
 			this.createFoldersForComponents = createFoldersForComponents;
 		}
+		
+		public DescribableList<RTCExtension, RTCExtensionDescriptor> getExtensions() {
+	        return extensions;
+	    }
 		
 		public boolean getCreateFoldersForComponents() {
 			return createFoldersForComponents;
@@ -420,6 +432,10 @@ public class RTCScm extends SCM {
 		public String getMasterBuildToolkit(String buildTool, TaskListener listener) throws IOException, InterruptedException {
 			return getBuildToolkit(buildTool, Hudson.getInstance(), listener);
 		}
+		
+        public List<RTCExtensionDescriptor> getExtensionDescriptors() {
+            return RTCExtensionDescriptor.all();
+        }
 		
 		@Override
 		public boolean isApplicable(Job project) {

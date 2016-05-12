@@ -1,4 +1,4 @@
-package jenkins.plugins.teamant.build.publishers;
+package jenkins.plugins.experimental.publisher;
 
 import hudson.Extension;
 import hudson.FilePath;
@@ -10,8 +10,13 @@ import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Publisher;
 import hudson.tasks.Recorder;
+import hudson.util.DescribableList;
 
 import java.io.IOException;
+import java.util.List;
+
+import jenkins.plugins.experimental.behaviour.RTCExtension;
+import jenkins.plugins.experimental.behaviour.RTCExtensionDescriptor;
 import jenkins.tasks.SimpleBuildStep;
 
 import org.kohsuke.stapler.DataBoundConstructor;
@@ -21,38 +26,21 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * execution based on a defined condition.
  *
  */
-public class RTCTestPublisher extends Recorder implements SimpleBuildStep {
+public class RTCPublisher extends Recorder implements SimpleBuildStep {
 	
-	private String label;
-	private String logFile;
-
 	/**
-	 * @param label
-	 *            RTC Build Result Activity label.
-	 * @param enclosedSteps
-	 *            List of enclosed build steps.
-	 */
+     * All the configured extensions attached to this.
+     */
+    private DescribableList<RTCExtension,RTCExtensionDescriptor> extensions;
+
 	@DataBoundConstructor
-	public RTCTestPublisher(String label, String logFile) {
-		this.label = label;
-		this.logFile = logFile;
+	public RTCPublisher(String label, String logFile) {
 	}
 	
 
-	/**
-	 * @return the label
-	 */
-	public String getLabel() {
-		return label;
-	}
-
-
-	/**
-	 * @return the logFile
-	 */
-	public String getLogFile() {
-		return logFile;
-	}
+	public DescribableList<RTCExtension, RTCExtensionDescriptor> getExtensions() {
+        return extensions;
+    }
 
 
 	@Override
@@ -87,8 +75,12 @@ public class RTCTestPublisher extends Recorder implements SimpleBuildStep {
 		 */
 		@Override
 		public String getDisplayName() {
-			return "Publish JUnit test to RTC Build Result";
+			return "Publish to RTC Build Result";
 		}
+		
+		public List<RTCPublisherExtensionDescriptor> getExtensionDescriptors() {
+            return RTCPublisherExtensionDescriptor.all();
+        }
 	}
 
 	@Override

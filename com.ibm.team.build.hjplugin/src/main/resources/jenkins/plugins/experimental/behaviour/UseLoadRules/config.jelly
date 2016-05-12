@@ -1,0 +1,35 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+    <f:dropdownList title="${%From}">
+		<!-- Each of the following dropdownListBlocks has an invisibleEntry containing a hidden input.
+		The reason for this is to make sure that the structure of underlying config.xml, and
+		the java class at back-end does not break.
+		Both (config.xml and java class) expect <value> and <buildTypeStr>.
+		If config.xml structure is changed, users might find it difficult to move back to older version if needed.
+		-->
+
+		<!-- Build Workspace -->
+		<f:dropdownListBlock selected="true" title="${%Workspace}">
+		    <f:entry title="${%File path}">
+		        <f:textbox />
+		    </f:entry>
+
+		</f:dropdownListBlock>
+
+		<!-- snapshot --> 
+		<f:dropdownListBlock selected="false" title="${%Component}">
+			
+			<f:entry title="${%Component name}">
+		        <f:textbox/>
+		    </f:entry>
+		    
+		    <f:entry title="${%File path}">
+		        <f:textbox/>
+		    </f:entry>
+
+		</f:dropdownListBlock>
+
+		<f:dropdownListBlock selected="false" title="${%Embedded MBB Load Rule Generator}"/>
+	</f:dropdownList>
+
+</j:jelly>
