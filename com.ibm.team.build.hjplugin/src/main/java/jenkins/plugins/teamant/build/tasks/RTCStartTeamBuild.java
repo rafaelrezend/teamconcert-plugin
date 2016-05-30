@@ -51,7 +51,7 @@ public class RTCStartTeamBuild extends Builder {
 				@SuppressWarnings("rawtypes") Class<? extends AbstractProject> aClass) {
 			// indicates that this builder can be used with all kinds of project
 			// types
-			return true;
+			return false;
 		}
 
 		/**
