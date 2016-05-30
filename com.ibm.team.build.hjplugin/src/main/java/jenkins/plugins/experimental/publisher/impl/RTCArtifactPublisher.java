@@ -1,13 +1,16 @@
-package jenkins.plugins.experimental.publisher;
+package jenkins.plugins.experimental.publisher.impl;
 
+import jenkins.plugins.experimental.publisher.RTCPublisherExtension;
+import jenkins.plugins.experimental.publisher.RTCPublisherExtensionDescriptor;
 import hudson.Extension;
+
 import org.kohsuke.stapler.DataBoundConstructor;
 
-public class RTCLogPublisher extends RTCPublisherExtension {
+public class RTCArtifactPublisher extends RTCPublisherExtension {
 	
 
 	@DataBoundConstructor
-	public RTCLogPublisher() {
+	public RTCArtifactPublisher() {
 	}
 	
 
@@ -19,7 +22,7 @@ public class RTCLogPublisher extends RTCPublisherExtension {
 		 */
 		@Override
 		public String getDisplayName() {
-			return "Log";
+			return "Artifact";
 		}
 	}
 

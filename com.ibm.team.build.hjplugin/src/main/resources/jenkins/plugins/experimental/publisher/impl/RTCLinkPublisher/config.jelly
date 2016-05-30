@@ -1,10 +1,10 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
 
-	<f:entry title="${%Label}">
+	<f:entry title="${%Title}" description="Title shown in the RTC Build Result.">
         <f:textbox />
     </f:entry>
     
-    <f:entry title="${%File path}">
+    <f:entry title="${%Link URL}">
         <f:textbox />
     </f:entry>
 

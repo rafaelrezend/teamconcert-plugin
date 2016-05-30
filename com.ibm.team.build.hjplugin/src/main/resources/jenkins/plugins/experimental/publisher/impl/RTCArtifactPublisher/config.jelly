@@ -1,0 +1,15 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+	<f:entry title="${%Title}" description="Title shown in the RTC Build Result.">
+        <f:textbox />
+    </f:entry>
+    
+    <f:entry title="${%Artifact path}" description="Relative path to the Jenkins workspace.">
+        <f:textbox />
+    </f:entry>
+    
+    <f:entry field="compressResources">
+    	<f:checkbox title="${%Compress resources before publishing.}"/>
+    </f:entry>
+
+</j:jelly>
