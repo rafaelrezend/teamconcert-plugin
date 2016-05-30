@@ -1,24 +1,47 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
     
-    <f:radioBlock title="${%Create new RTC Build Result}" checked="true" help="../../descriptor/com.ibm.team.build.internal.hjplugin.RTCScm/help/buildDefinitionType" >
-		    <f:block>
-    <table width="80%">
-		
-		<f:entry title="${%Build Definition ID}">
-			<f:textbox/>
-		</f:entry>
-		
-		<f:entry title="${%Rename Build Result}">
-			<f:textbox/>
-		</f:entry>
-		<f:entry title="${%Add tags to Build Result}">
-			<f:textbox/>
-		</f:entry>
-			    </table>
-	    </f:block>
+	<f:block>
+	    <table width="100%">
+	    	<f:dropdownList name="buildType" title="${%Build Result}" help="/descriptor/com.ibm.team.build.internal.hjplugin.RTCScm/help/buildConfiguration">
+	    		<!-- Each of the following dropdownListBlocks has an invisibleEntry containing a hidden input.
+	    		The reason for this is to make sure that the structure of underlying config.xml, and
+	    		the java class at back-end does not break.
+	    		Both (config.xml and java class) expect <value> and <buildTypeStr>.
+	    		If config.xml structure is changed, users might find it difficult to move back to older version if needed.
+	    		-->
 
-	</f:radioBlock>
+	    		<!-- Build Workspace -->
+				<f:dropdownListBlock selected="true" title="${%Create new...}">
+					
+					<f:entry title="${%Build Definition ID}">
+						<f:textbox/>
+					</f:entry>
+							
+				</f:dropdownListBlock>
 
-	<f:radioBlock title="${%Reuse RTC Build Result from environment variable}" default="false" checked="false" help="../../descriptor/com.ibm.team.build.internal.hjplugin.RTCScm/help/buildWorkspaceType" />
+	    		<!-- reuse BR --> 
+				<f:dropdownListBlock selected="false" title="${%Reuse from environment variables}"/>
+
+			</f:dropdownList>
+			
+			<f:advanced>
+			
+			<f:section title="${%Build Result configuration}"/>
+			
+				<f:entry title="${%Rename Build Result}">
+					<f:textbox/>
+				</f:entry>
+				
+				<f:entry title="${%Add tags to Build Result}">
+					<f:textbox/>
+				</f:entry>
+				
+				<f:entry field="keepOpen" title="${%Complete RTC Build Result manually}">
+			    	<f:checkbox/>
+			    </f:entry>
+  			</f:advanced>
+			
+		</table>
+	</f:block>
 	
 </j:jelly>
