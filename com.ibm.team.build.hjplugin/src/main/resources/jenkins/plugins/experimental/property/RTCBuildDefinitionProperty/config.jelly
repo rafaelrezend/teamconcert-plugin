@@ -1,7 +1,32 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:c="/lib/credentials">
     
 	<f:block>
 	    <table width="100%">
+	    
+	    <f:optionalBlock name="overrideGlobal" title="Override global RTC repository connection (https://192.168.99.100:9443/ccm)" checked="false" inline="true" >
+    
+        <f:entry name="buildTool" title="${%buildTool.title}" field="buildTool" >
+            <f:select name="buildTool" />
+        </f:entry>
+        
+        <f:entry title="${%serverURI.title}"  field="serverURI" >
+            <f:textbox name="serverURI" default="${descriptor.globalServerURI}" clazz="required" checkMessage="${%serverURI.checkMessage}"/>
+        </f:entry>
+
+        <f:entry title="${%timeout.title}" field="timeout">
+            <f:textbox name="timeout" default="${descriptor.globalTimeout}" />
+        </f:entry>
+        
+        <f:entry title="${%credentialsId.title}" field="credentialsId" >
+            <c:select name="credentialsId"/>
+        </f:entry>
+    
+        <f:validateButton title="${%checkJobConnection.title}"  />
+        
+        </f:optionalBlock>
+	    
+	    
+	    
 	    	<f:dropdownList name="buildType" title="${%Build Result}" help="/descriptor/com.ibm.team.build.internal.hjplugin.RTCScm/help/buildConfiguration">
 	    		<!-- Each of the following dropdownListBlocks has an invisibleEntry containing a hidden input.
 	    		The reason for this is to make sure that the structure of underlying config.xml, and
@@ -16,6 +41,8 @@
 					<f:entry title="${%Build Definition ID}">
 						<f:textbox/>
 					</f:entry>
+					
+					<f:validateButton title="${%checkJobConnection.title}"  />
 							
 				</f:dropdownListBlock>
 

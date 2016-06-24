@@ -24,8 +24,6 @@
             <f:select name="buildTool" />
         </f:entry>
         
-        <f:optionalBlock name="avoidUsingToolkit" title="${%avoidUsingToolkit.title}" field="avoidUsingToolkit" checked="${descriptor.getAvoidUsingToolkit()}" inline="true" />
-            
         <f:entry title="${%serverURI.title}"  field="serverURI" >
             <f:textbox name="serverURI" default="${descriptor.globalServerURI}" clazz="required" checkMessage="${%serverURI.checkMessage}" />
         </f:entry>
